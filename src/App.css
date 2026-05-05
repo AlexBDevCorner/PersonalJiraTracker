@@ -1,0 +1,160 @@
+:root {
+  color-scheme: dark;
+
+  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.45;
+  color: #e8eaed;
+  background-color: #0c0d10;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Surfaces */
+  --color-bg: #0c0d10;
+  --color-surface: #15171b;
+  --color-surface-alt: #1c1f24;
+  --color-surface-raised: #20242b;
+
+  /* Hairlines */
+  --color-border: #25282f;
+  --color-border-strong: #383c46;
+
+  /* Text */
+  --color-text: #e8eaed;
+  --color-text-muted: #8b909a;
+  --color-text-dim: #5b6069;
+
+  /* Accent — sage mint, used for interactive primary affordances */
+  --color-accent: #9ed8b8;
+  --color-accent-strong: #b9e6cd;
+  --color-accent-bg: #182521;
+  --color-accent-bg-strong: #1f3329;
+
+  /* Warm amber — reserved for favorites + warning state */
+  --color-warning: #e3b169;
+  --color-warning-bg: #261f10;
+
+  --color-danger: #e58a8a;
+  --color-danger-bg: #2a1818;
+  --color-danger-border: #4a2a2a;
+
+  --header-height: 3rem;
+
+  --shadow-overlay: 0 24px 60px rgba(0, 0, 0, 0.55),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  /* Subtle vignette to add depth without noise. */
+  background-image: radial-gradient(
+    1200px 600px at 80% -10%,
+    rgba(158, 216, 184, 0.04),
+    transparent 60%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1rem;
+}
+
+h3 {
+  font-size: 0.9rem;
+}
+
+button {
+  font-family: inherit;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  color-scheme: dark;
+}
+
+::selection {
+  background: var(--color-accent-bg-strong);
+  color: var(--color-accent-strong);
+}
+
+/* Scrollbars: thin, surface-tinted */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-dim);
+  background-clip: padding-box;
+}
+
+/* Numerals always tabular for stable column widths. */
+.tabular,
+table,
+.timesheet-grid__cell,
+.timesheet-grid__row-total,
+.timesheet-grid__day-total,
+.timesheet-grid__week-total {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Small-caps utility used on labels and panel titles. */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}

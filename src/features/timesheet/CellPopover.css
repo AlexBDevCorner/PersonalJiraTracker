@@ -1,0 +1,267 @@
+.cell-popover__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 4rem var(--space-3) var(--space-3);
+  z-index: 50;
+}
+
+.cell-popover {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-overlay);
+  width: min(36rem, 100%);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 6rem);
+  overflow: hidden;
+}
+
+.cell-popover__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-alt);
+}
+
+.cell-popover__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.95rem;
+  min-width: 0;
+}
+
+.cell-popover__issue-key {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  letter-spacing: 0.01em;
+}
+
+.cell-popover__issue-summary {
+  font-weight: 400;
+  color: var(--color-text);
+  font-size: 0.875rem;
+}
+
+.cell-popover__date {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.02em;
+}
+
+.cell-popover__close {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  width: 1.75rem;
+  height: 1.75rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+  flex-shrink: 0;
+}
+
+.cell-popover__close:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+  background: var(--color-surface);
+}
+
+.cell-popover__error {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-danger-bg);
+  border-bottom: 1px solid var(--color-danger-border);
+  color: var(--color-danger);
+  font-size: 0.8125rem;
+}
+
+.cell-popover__entries {
+  padding: var(--space-3) var(--space-4);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 4rem;
+}
+
+.cell-popover__empty {
+  margin: 0;
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--color-border);
+  font-size: 0.85rem;
+}
+
+.cell-popover__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.cell-popover__entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+}
+
+.cell-popover__entry.is-editing {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.cell-popover__entry.is-draft {
+  border-style: dashed;
+  border-color: var(--color-accent);
+}
+
+.cell-popover__entry.is-modified {
+  border-color: var(--color-warning);
+  box-shadow: inset 3px 0 0 0 var(--color-warning);
+}
+
+.cell-popover__entry.is-deleted {
+  border-style: dashed;
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-bg);
+}
+
+.cell-popover__entry.is-deleted .cell-popover__entry-hours,
+.cell-popover__entry.is-deleted .cell-popover__entry-comment {
+  text-decoration: line-through;
+  color: var(--color-text-dim);
+}
+
+.cell-popover__entry-main {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.cell-popover__entry-hours {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.cell-popover__entry-comment {
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+.cell-popover__entry-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.cell-popover__status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.cell-popover__status.is-draft {
+  background: var(--color-accent-bg);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.cell-popover__status.is-modified {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-color: var(--color-warning);
+}
+
+.cell-popover__status.is-deleted {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+}
+
+.cell-popover__entry-btn {
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 0 var(--space-2);
+  height: 1.6rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.cell-popover__entry-btn:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-alt);
+}
+
+.cell-popover__entry-btn.is-danger {
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+}
+
+.cell-popover__entry-btn.is-danger:hover:not(:disabled) {
+  background: var(--color-danger-bg);
+}
+
+.cell-popover__entry-btn.is-primary {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.cell-popover__entry-btn.is-primary:hover:not(:disabled) {
+  background: var(--color-accent-bg);
+}
+
+.cell-popover__entry-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cell-popover__form-wrap {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-alt);
+}

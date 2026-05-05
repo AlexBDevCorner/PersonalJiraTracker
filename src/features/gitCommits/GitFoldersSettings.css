@@ -1,0 +1,126 @@
+.git-folders {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 36rem;
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.git-folders__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.git-folders__hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+}
+
+.git-folders__error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-danger-bg);
+  border: 1px solid var(--color-danger-border);
+  border-radius: var(--radius-sm);
+}
+
+.git-folders__add {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.git-folders__add .settings-form__input {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.git-folders__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.git-folders__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-3);
+  height: 2.25rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.git-folders__path {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text);
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.git-folders__remove {
+  font: inherit;
+  font-size: 0.75rem;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0 var(--space-2);
+  height: 1.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.git-folders__remove:hover:not(:disabled) {
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-bg);
+}
+
+.git-folders__remove:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.git-folders__empty {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-dim);
+  padding: var(--space-3);
+  text-align: center;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  min-height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.git-folders__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+}
+
+.git-folders__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}

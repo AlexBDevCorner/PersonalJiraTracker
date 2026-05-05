@@ -1,0 +1,97 @@
+.submit-bar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.submit-bar__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  min-height: 2.25rem;
+}
+
+.submit-bar__btn {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0 var(--space-4);
+  height: 2.25rem;
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.submit-bar__btn:hover:not(:disabled) {
+  background: var(--color-accent-strong);
+  border-color: var(--color-accent-strong);
+}
+
+.submit-bar__btn:disabled {
+  cursor: not-allowed;
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-dim);
+}
+
+.submit-bar__counts {
+  display: inline-flex;
+  gap: 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.submit-bar__counts span {
+  padding: 0 var(--space-3);
+  border-left: 1px solid var(--color-border);
+}
+
+.submit-bar__counts span:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.submit-bar__error {
+  color: var(--color-danger);
+  font-size: 0.85rem;
+}
+
+.submit-bar__summary {
+  font-size: 0.85rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.submit-bar__summary.has-failures {
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-bg);
+}
+
+.submit-bar__summary-line {
+  font-weight: 500;
+}
+
+.submit-bar__failures {
+  margin: var(--space-2) 0 0;
+  padding-left: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.submit-bar__failures li {
+  margin-bottom: var(--space-1);
+}
+
+.submit-bar__retry-note {
+  margin-top: var(--space-2);
+  color: var(--color-text-dim);
+  font-style: italic;
+  font-size: 0.8125rem;
+}

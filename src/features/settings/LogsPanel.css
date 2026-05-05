@@ -1,0 +1,135 @@
+.logs-panel {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.logs-panel__title {
+  margin: 0 0 var(--space-2);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.logs-panel__hint {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.logs-panel__actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.logs-panel__btn {
+  font: inherit;
+  font-size: 0.8125rem;
+  padding: 0 var(--space-3);
+  height: 2rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.logs-panel__btn:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-alt);
+}
+
+.logs-panel__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.logs-panel__empty {
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  min-height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logs-panel__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 18rem;
+  overflow-y: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+}
+
+.logs-panel__entry {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+.logs-panel__entry:last-child {
+  border-bottom: none;
+}
+
+.logs-panel__entry.is-error {
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.logs-panel__entry.is-warn {
+  color: var(--color-warning);
+}
+
+.logs-panel__timestamp {
+  color: var(--color-text-dim);
+}
+
+.logs-panel__level {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.logs-panel__entry.is-error .logs-panel__level {
+  color: var(--color-danger);
+}
+
+.logs-panel__entry.is-warn .logs-panel__level {
+  color: var(--color-warning);
+}
+
+.logs-panel__message {
+  word-break: break-word;
+  color: var(--color-text);
+}
+
+.logs-panel__entry.is-error .logs-panel__message,
+.logs-panel__entry.is-warn .logs-panel__message {
+  color: inherit;
+}
+
+.logs-panel__details {
+  grid-column: 1 / -1;
+  margin: var(--space-1) 0 0;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}

@@ -1,0 +1,187 @@
+.assigned-to-me {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  min-width: 0;
+  height: 26rem;
+  overflow: hidden;
+}
+
+.assigned-to-me__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  height: 1.6rem;
+  flex-shrink: 0;
+}
+
+.assigned-to-me__title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-text-dim);
+  margin: 0;
+}
+
+.assigned-to-me__refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.assigned-to-me__refresh:hover:not(:disabled) {
+  color: var(--color-accent);
+  background: var(--color-accent-bg);
+  border-color: var(--color-border-strong);
+}
+
+.assigned-to-me__refresh:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.assigned-to-me__meta,
+.assigned-to-me__error {
+  font-size: 0.8125rem;
+  margin: 0;
+  padding: var(--space-3) var(--space-2);
+  text-align: center;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assigned-to-me__meta {
+  color: var(--color-text-muted);
+}
+
+.assigned-to-me__error {
+  color: var(--color-danger);
+  border-color: var(--color-danger-border);
+}
+
+.assigned-to-me__list {
+  list-style: none;
+  margin: 0;
+  padding: 0 2px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.assigned-to-me__item {
+  display: grid;
+  grid-template-columns: 1.85rem 1fr 1.85rem;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  min-height: 4rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  min-width: 0;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.assigned-to-me__item:hover {
+  background: var(--color-surface-alt);
+  border-color: var(--color-border);
+}
+
+.assigned-to-me__star,
+.assigned-to-me__add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-dim);
+  cursor: pointer;
+  padding: 0;
+  transition: color 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+.assigned-to-me__star:hover:not(:disabled) {
+  color: var(--color-warning);
+  background: var(--color-warning-bg);
+  border-color: var(--color-border);
+}
+
+.assigned-to-me__add:hover:not(:disabled) {
+  color: var(--color-accent);
+  background: var(--color-accent-bg);
+  border-color: var(--color-border);
+}
+
+.assigned-to-me__star:focus-visible,
+.assigned-to-me__add:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.assigned-to-me__star.is-favorite {
+  color: var(--color-warning);
+}
+
+.assigned-to-me__add:disabled {
+  cursor: default;
+  color: var(--color-accent);
+  opacity: 0.7;
+}
+
+.assigned-to-me__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.assigned-to-me__key {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  letter-spacing: 0.01em;
+}
+
+.assigned-to-me__summary {
+  font-size: 0.85rem;
+  color: var(--color-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.assigned-to-me__status {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
