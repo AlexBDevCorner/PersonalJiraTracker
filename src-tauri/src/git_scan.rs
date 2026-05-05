@@ -2,7 +2,13 @@ use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
 use serde::{Deserialize, Serialize};
+
+#[cfg(windows)]
+const CREATE_NO_WINDOW: u32 = 0x0800_0000;
 
 const SKIP_DIRS: &[&str] = &[
     "node_modules",
@@ -172,7 +178,10 @@ fn read_commits(
 ) -> Result<Vec<GitCommit>, String> {
     let since = format!("{} 00:00:00", start_iso);
     let until = format!("{} 23:59:59", end_iso);
-    let output = Command::new("git")
+    let mut cmd = Command::new("git");
+    #[cfg(windows)]
+    cmd.creation_flags(CREATE_NO_WINDOW);
+    let output = cmd
         .arg("-C")
         .arg(repo)
         .arg("log")
