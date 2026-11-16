@@ -40,7 +40,7 @@ export function AssignedToMe({
     try {
       const client = await createJiraClientFromSettings();
       const issues = await searchIssuesAssignedToCurrentUser(client);
-      // Cache summaries locally so the palette / recent list can find them
+      // Cache summaries locally so the palette can find them
       // by key without another round-trip.
       await Promise.all(
         issues.map((issue) =>

@@ -7,7 +7,6 @@ import {
   unpinIssueFromAllGroups,
 } from "../favorites";
 import { ensureIssueStub } from "../issues";
-import { RecentTickets } from "../issues/RecentTickets";
 import { AssignedToMe } from "../issues/AssignedToMe";
 import { GitCommitsPanel } from "../gitCommits";
 import { CommandPalette } from "../palette/CommandPalette";
@@ -320,14 +319,6 @@ export function TimesheetPage() {
           />
         )}
       </section>
-
-      <RecentTickets
-        reloadKey={reloadKey}
-        weekIssueKeys={weekIssueKeys}
-        favoriteKeys={favoriteKeys}
-        onAddToWeek={handleAddToWeek}
-        onToggleFavorite={handleToggleFavorite}
-      />
 
       <CommandPalette
         open={paletteOpen}

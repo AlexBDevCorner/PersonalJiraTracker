@@ -1,4 +1,3 @@
-export { RecentTickets } from "./RecentTickets";
 export { AssignedToMe } from "./AssignedToMe";
 export {
   ensureIssueStub,

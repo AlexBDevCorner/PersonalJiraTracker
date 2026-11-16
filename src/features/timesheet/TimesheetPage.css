@@ -1,6 +1,6 @@
 .timesheet-page {
   display: grid;
-  grid-template-columns: 22rem minmax(0, 1fr) 24rem;
+  grid-template-columns: 22rem minmax(0, 1fr);
   gap: var(--space-4);
   align-items: start;
   min-height: calc(100vh - var(--header-height) - var(--space-5) * 2);
@@ -93,7 +93,7 @@
 
 @media (max-width: 1280px) {
   .timesheet-page {
-    grid-template-columns: 20rem minmax(0, 1fr) 22rem;
+    grid-template-columns: 20rem minmax(0, 1fr);
   }
 }
 
