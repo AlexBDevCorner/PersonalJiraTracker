@@ -71,6 +71,24 @@ A **Test connection** button calls `/rest/api/3/myself` and reports the
 account it resolves so you can confirm the credentials are correct before
 saving.
 
+### Git repositories in WSL2
+
+In the Windows app, open **Settings → Git folders** and add a WSL folder, for example
+`\\wsl$\Ubuntu\home\bobale` or `\\wsl.localhost\Ubuntu\home\bobale\PersonalJiraTracker`.
+Both parent folders containing repositories and individual repositories are supported.
+Windows and WSL folders can be configured together; their commits appear in the same panel.
+
+Replace `Ubuntu` with the installed distribution name shown by `wsl --list --quiet`.
+The scanner discovers repositories and runs Git inside that distribution as its default
+Linux user, so Git must be installed there. WSL may start the distribution when scanning.
+Linked Git worktrees are supported. Discovery uses the same depth limit (six levels)
+and generated-folder exclusions as local scanning and skips symlinked child directories.
+
+Configure **Git author emails** to include the email used for your WSL commits.
+Only non-merge commits in the selected week whose messages contain a Jira key are shown.
+Missing distributions, inaccessible roots, and Git failures appear in the commits panel.
+When running the Linux build of the app inside WSL, use native paths such as `/home/bobale`.
+
 ## Commands
 
 | Command                                            | What it does                                                                |
@@ -131,6 +149,15 @@ A few invariants worth knowing if you're going to change this code:
 npm test
 cargo test --manifest-path src-tauri/Cargo.toml
 ```
+
+On Windows with WSL Ubuntu and Git installed, run the WSL integration test explicitly:
+
+```sh
+cargo test --manifest-path src-tauri/Cargo.toml scans_wsl_repositories_and_worktrees_with_native_roots -- --ignored
+```
+
+Set `WSL_TEST_DISTRIBUTION` to use a distribution other than `Ubuntu`. The test creates
+temporary repositories and a linked worktree, then removes them when finished.
 
 ## Known limitations
 

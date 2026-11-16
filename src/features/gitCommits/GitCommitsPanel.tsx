@@ -287,7 +287,7 @@ export function GitCommitsPanel({
                   <ul className="git-commits__commits">
                     {group.commits.map((commit) => (
                       <li
-                        key={commit.hash}
+                        key={`${commit.repoPath}:${commit.hash}`}
                         className="git-commits__commit"
                       >
                         <div className="git-commits__commit-meta">
@@ -312,7 +312,7 @@ export function GitCommitsPanel({
 
       {state.kind === "ready" && state.result.errors.length > 0 && (
         <details className="git-commits__errors">
-          <summary>{state.result.errors.length} repos failed to scan</summary>
+          <summary>{state.result.errors.length} folders or repositories failed to scan</summary>
           <ul>
             {state.result.errors.map((err) => (
               <li key={err.repoPath}>

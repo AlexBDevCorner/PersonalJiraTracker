@@ -113,6 +113,11 @@ export function GitFoldersSettings() {
         Folders to scan for Git repositories. The Timesheet panel will list
         commits whose message contains a Jira key, authored by the emails below.
       </p>
+      <p className="git-folders__hint">
+        For WSL folders on Windows, use <code>{"\\\\wsl$\\Ubuntu\\home\\you"}</code>
+        {" or "}<code>{"\\\\wsl.localhost\\Ubuntu\\home\\you"}</code>.
+        Replace Ubuntu with your distribution name. Git must be installed in that distribution.
+      </p>
 
       {actionError && (
         <p className="git-folders__error" role="alert">
