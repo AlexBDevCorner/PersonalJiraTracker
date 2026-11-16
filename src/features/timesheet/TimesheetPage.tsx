@@ -14,7 +14,7 @@ import { WeekNavigation } from "./WeekNavigation";
 import { TimesheetGrid, type TimesheetRow } from "./TimesheetGrid";
 import { CellPopover } from "./CellPopover";
 import { SubmitBar } from "./SubmitBar";
-import { buildWeek } from "./week";
+import { buildWeek, type Week } from "./week";
 import { hydrateIssueForWeek, syncWeekFromJira } from "./worklogSync";
 import { listIssuesWithWorklogsInRange } from "./worklogsRepo";
 import {
@@ -44,14 +44,19 @@ export function TimesheetPage() {
   const [selectedCell, setSelectedCell] = useState<SelectedCell | null>(null);
   const [worklogIssues, setWorklogIssues] = useState<WorklogIssue[]>([]);
   const [picks, setPicks] = useState<WeekPick[]>([]);
+  const [currentWeekIssueKeys, setCurrentWeekIssueKeys] = useState<Set<string>>(new Set());
   const [favoriteKeys, setFavoriteKeys] = useState<Set<string>>(new Set());
   const [paletteOpen, setPaletteOpen] = useState(false);
 
   const today = useMemo(() => new Date(), []);
+  const currentWeek = useMemo(() => buildWeek(today, today), [today]);
   const week = useMemo(() => buildWeek(weekReference, today), [weekReference, today]);
   const startIso = week.days[0].isoDate;
   const endIso = week.days[6].isoDate;
   const weekStart = startIso;
+  const currentWeekStart = currentWeek.days[0].isoDate;
+  const currentWeekEnd = currentWeek.days[6].isoDate;
+  const isCurrentWeek = weekStart === currentWeekStart;
   const todayIso = useMemo(() => {
     const t = week.days.find((d) => d.isToday);
     return t ? t.isoDate : null;
@@ -91,6 +96,31 @@ export function TimesheetPage() {
       cancelled = true;
     };
   }, [startIso, endIso, weekStart, reloadKey]);
+
+  useEffect(() => {
+    if (isCurrentWeek) return;
+    let cancelled = false;
+    Promise.all([
+      listWeekPicks(currentWeekStart),
+      listIssuesWithWorklogsInRange(currentWeekStart, currentWeekEnd),
+    ])
+      .then(([currentPicks, currentIssues]) => {
+        if (cancelled) return;
+        setCurrentWeekIssueKeys(new Set([
+          ...currentPicks.map((pick) => pick.issueKey),
+          ...currentIssues.map((issue) => issue.issueKey),
+        ]));
+      })
+      .catch((cause) => {
+        if (cancelled) return;
+        setError(
+          cause instanceof Error ? cause.message : "Failed to load current week contents.",
+        );
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isCurrentWeek, currentWeekStart, currentWeekEnd, reloadKey]);
 
   // Refresh favorite-key set whenever something changes.
   useEffect(() => {
@@ -177,10 +207,12 @@ export function TimesheetPage() {
   );
 
   const handleAddToWeek = useCallback(
-    async (issueKey: string) => {
-      await addWeekPick(issueKey, weekStart);
+    async (issueKey: string, targetWeek: Week = week) => {
+      const targetStart = targetWeek.days[0].isoDate;
+      const targetEnd = targetWeek.days[6].isoDate;
+      await addWeekPick(issueKey, targetStart);
       setReloadKey((n) => n + 1);
-      hydrateIssueForWeek(issueKey, startIso, endIso)
+      hydrateIssueForWeek(issueKey, targetStart, targetEnd)
         .then((result) => {
           if (result.imported + result.updated + result.removed > 0) {
             setReloadKey((n) => n + 1);
@@ -190,7 +222,15 @@ export function TimesheetPage() {
           // Next full sync will retry.
         });
     },
-    [weekStart, startIso, endIso],
+    [week],
+  );
+
+  const handleAddToCurrentWeek = useCallback(
+    async (issueKey: string) => {
+      await handleAddToWeek(issueKey, currentWeek);
+      setCurrentWeekIssueKeys((keys) => new Set(keys).add(issueKey));
+    },
+    [handleAddToWeek, currentWeek],
   );
 
   const handleRemoveRow = useCallback(
@@ -316,6 +356,8 @@ export function TimesheetPage() {
             onDateSelect={setSelectedDateIso}
             onRemoveRow={handleRemoveRow}
             onToggleFavorite={handleToggleFavorite}
+            currentWeekIssueKeys={currentWeekIssueKeys}
+            onAddToCurrentWeek={isCurrentWeek ? undefined : handleAddToCurrentWeek}
           />
         )}
       </section>

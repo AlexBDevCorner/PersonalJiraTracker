@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { IssueKeyLink, StarIcon } from "../../ui";
+import { CheckIcon, IssueKeyLink, PlusIcon, StarIcon } from "../../ui";
 import type { Week } from "./week";
 import {
   getCellSyncMarkersForRange,
@@ -39,6 +39,8 @@ type Props = {
   onDateSelect?: (isoDate: string) => void;
   onRemoveRow?: (issueKey: string) => void;
   onToggleFavorite?: (issueKey: string) => void | Promise<void>;
+  currentWeekIssueKeys?: ReadonlySet<string>;
+  onAddToCurrentWeek?: (issueKey: string) => void | Promise<void>;
 };
 
 export function TimesheetGrid({
@@ -51,8 +53,31 @@ export function TimesheetGrid({
   onDateSelect,
   onRemoveRow,
   onToggleFavorite,
+  currentWeekIssueKeys,
+  onAddToCurrentWeek,
 }: Props) {
   const [favBusyKey, setFavBusyKey] = useState<string | null>(null);
+  const [addingKeys, setAddingKeys] = useState<Set<string>>(new Set());
+  const [addError, setAddError] = useState<string | null>(null);
+
+  const handleAddToCurrentWeek = async (issueKey: string) => {
+    if (!onAddToCurrentWeek) return;
+    setAddingKeys((keys) => new Set(keys).add(issueKey));
+    setAddError(null);
+    try {
+      await onAddToCurrentWeek(issueKey);
+    } catch (cause) {
+      setAddError(
+        cause instanceof Error ? cause.message : "Failed to add ticket to current week.",
+      );
+    } finally {
+      setAddingKeys((keys) => {
+        const next = new Set(keys);
+        next.delete(issueKey);
+        return next;
+      });
+    }
+  };
 
   const handleToggleFavorite = async (issueKey: string) => {
     if (!onToggleFavorite) return;
@@ -139,9 +164,9 @@ export function TimesheetGrid({
 
   return (
     <div className="timesheet-grid" role="table" aria-label="Weekly timesheet">
-      {error && (
+      {(error || addError) && (
         <div className="timesheet-grid__error" role="alert">
-          {error}
+          {error || addError}
         </div>
       )}
       <div className="timesheet-grid__head" role="row">
@@ -207,6 +232,30 @@ export function TimesheetGrid({
                 {row.summary ?? "(no summary)"}
               </span>
             </div>
+            {onAddToCurrentWeek && (() => {
+              const onCurrentWeek = currentWeekIssueKeys?.has(row.issueKey) ?? false;
+              const adding = addingKeys.has(row.issueKey);
+              return (
+                <button
+                  type="button"
+                  className={
+                    "timesheet-grid__row-add" +
+                    (onCurrentWeek ? " is-added" : "")
+                  }
+                  onClick={() => void handleAddToCurrentWeek(row.issueKey)}
+                  disabled={onCurrentWeek || adding}
+                  aria-busy={adding}
+                  aria-label={
+                    onCurrentWeek
+                      ? `${row.issueKey} already in current week`
+                      : `Add ${row.issueKey} to current week`
+                  }
+                  title={onCurrentWeek ? "Already in current week" : "Add to current week"}
+                >
+                  {onCurrentWeek ? <CheckIcon size={14} /> : <PlusIcon size={14} />}
+                </button>
+              );
+            })()}
             {onToggleFavorite && (() => {
               const isFav = favoriteKeys?.has(row.issueKey) ?? false;
               const busy = favBusyKey === row.issueKey;

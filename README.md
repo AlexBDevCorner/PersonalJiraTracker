@@ -12,6 +12,8 @@ with Jira in one batch.
 ## Features
 
 - **Weekly timesheet grid** with per-day cells and daily/weekly totals.
+- **Carry tickets forward** — click the plus beside a ticket in another week's
+  timesheet to add it to the current week. A checkmark shows tickets already there.
 - **Cell popover** for entering hours and a comment without leaving the grid.
 - **Pending-change tracking** — drafts, edits, and deletions stay local until
   you submit. Retry-safe: if Jira accepts a worklog but the response fails,

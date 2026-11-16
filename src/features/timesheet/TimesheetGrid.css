@@ -141,6 +141,7 @@
 }
 
 .timesheet-grid__row-remove,
+.timesheet-grid__row-add,
 .timesheet-grid__row-star {
   flex-shrink: 0;
   width: 1.5rem;
@@ -157,6 +158,29 @@
   cursor: pointer;
   padding: 0;
   transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.timesheet-grid__row-add:hover:not(:disabled),
+.timesheet-grid__row-add.is-added {
+  color: var(--color-accent);
+}
+
+.timesheet-grid__row-add:hover:not(:disabled) {
+  border-color: var(--color-accent);
+  background: var(--color-accent-bg);
+}
+
+.timesheet-grid__row-add:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.timesheet-grid__row-add:disabled {
+  cursor: default;
+}
+
+.timesheet-grid__row-add[aria-busy="true"] {
+  opacity: 0.5;
 }
 
 /* Always visible — no hover-to-discover. Dimmed but legible. */
