@@ -193,16 +193,22 @@ type WorklogListResponse = {
   worklogs?: WorklogItemResponse[];
 };
 
-type JqlSearchIssue = {
+export type JiraSearchIssue = {
   key?: string;
   fields?: {
     summary?: string | null;
-    status?: { name?: string | null } | null;
+    status?: {
+      id?: string;
+      name?: string | null;
+      statusCategory?: { key?: string };
+    } | null;
+    project?: { key?: string };
+    issuetype?: { id?: string };
   } | null;
 };
 
 type JqlSearchResponse = {
-  issues?: JqlSearchIssue[];
+  issues?: JiraSearchIssue[];
   nextPageToken?: string;
   isLast?: boolean;
   total?: number;
@@ -216,13 +222,13 @@ export type JiraIssueSummary = {
   status: string | null;
 };
 
-async function searchIssuesByJql(
+export async function searchJiraIssuesByJql(
   client: JiraClient,
   jql: string,
-  options: { maxIssues?: number } = {},
-): Promise<JiraIssueSummary[]> {
+  options: { maxIssues?: number; fields?: string[] } = {},
+): Promise<JiraSearchIssue[]> {
   const maxIssues = options.maxIssues ?? Infinity;
-  const issues = new Map<string, JiraIssueSummary>();
+  const issues = new Map<string, JiraSearchIssue>();
 
   let nextPageToken: string | undefined;
   let useLegacy = false;
@@ -233,7 +239,7 @@ async function searchIssuesByJql(
       try {
         body = await client.post<JqlSearchResponse>("/rest/api/3/search/jql", {
           jql,
-          fields: ["summary", "status"],
+          fields: options.fields ?? ["summary", "status"],
           maxResults: 100,
           ...(nextPageToken ? { nextPageToken } : {}),
         });
@@ -249,7 +255,7 @@ async function searchIssuesByJql(
     } else {
       body = await client.post<JqlSearchResponse>("/rest/api/3/search", {
         jql,
-        fields: ["summary", "status"],
+        fields: options.fields ?? ["summary", "status"],
         maxResults: 100,
         startAt: legacyStartAt,
       });
@@ -260,11 +266,7 @@ async function searchIssuesByJql(
       const key = typeof item?.key === "string" ? item.key : "";
       if (!key) continue;
       if (issues.has(key)) continue;
-      issues.set(key, {
-        issueKey: key,
-        summary: item?.fields?.summary ?? null,
-        status: item?.fields?.status?.name ?? null,
-      });
+      issues.set(key, item);
       if (issues.size >= maxIssues) return [...issues.values()];
     }
 
@@ -281,6 +283,19 @@ async function searchIssuesByJql(
   }
 
   return [...issues.values()];
+}
+
+async function searchIssuesByJql(
+  client: JiraClient,
+  jql: string,
+  options: { maxIssues?: number } = {},
+): Promise<JiraIssueSummary[]> {
+  const issues = await searchJiraIssuesByJql(client, jql, options);
+  return issues.map((item) => ({
+    issueKey: item.key!,
+    summary: item.fields?.summary ?? null,
+    status: item.fields?.status?.name ?? null,
+  }));
 }
 
 export async function searchIssuesWithUserWorklogsInRange(

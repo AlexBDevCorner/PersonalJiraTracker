@@ -3,6 +3,7 @@ import { AppLayout, ErrorBanner, ErrorBoundary, Loading } from "./ui";
 import { TimesheetPage } from "./features/timesheet/TimesheetPage";
 import { FavoritesPage } from "./features/favorites/FavoritesPage";
 import { SettingsPage } from "./features/settings/SettingsPage";
+import { BoardPage } from "./features/board/BoardPage";
 import { useDbReady } from "./db";
 
 function App() {
@@ -33,6 +34,10 @@ function App() {
                 <TimesheetPage />
               </ErrorBoundary>
             }
+          />
+          <Route
+            path="board"
+            element={<ErrorBoundary><BoardPage /></ErrorBoundary>}
           />
           <Route
             path="favorites"

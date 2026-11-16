@@ -1,7 +1,7 @@
 # Jira Ticket Tracker
 
-A local-first desktop timesheet for Jira Cloud. Log time against tickets in a
-weekly grid, work offline, and push everything to Jira when you're ready.
+A desktop ticket board and local-first timesheet for Jira Cloud. Manage assigned
+tickets, log time in a weekly grid, and push your time reports when you're ready.
 Built with Tauri (Rust) + React + TypeScript on top of a local SQLite database.
 
 The app keeps an editable copy of your week in SQLite so the UI is fast and
@@ -11,6 +11,15 @@ with Jira in one batch.
 
 ## Features
 
+- **Personal Kanban board** — open **Board** to see all tickets assigned to you,
+  including completed tickets. Columns use the existing statuses for your tickets'
+  projects and issue types, including empty workflow statuses. Cards show the ticket
+  number and title; click the number to open Jira. Drag a card or use **Move to…**
+  to save its status immediately to Jira. The board refreshes every minute while
+  visible and when you return to the app or reconnect. Failed refreshes keep the
+  last board visible. Workflow restrictions, required fields, and ambiguous
+  transitions direct you to Jira to complete the move. Board changes require a
+  connection; they are separate from timesheet drafts and the Submit button.
 - **Weekly timesheet grid** with per-day cells and daily/weekly totals.
 - **Carry tickets forward** — click the plus beside a ticket in another week's
   timesheet to add it to the current week. A checkmark shows tickets already there.

@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { CloseIcon, GearIcon } from "./Icons";
 import "./AppLayout.css";
 
@@ -17,6 +17,10 @@ export function AppLayout() {
             <span>Ticket Tracker</span>
           </span>
         </Link>
+        <nav className="app-header__nav" aria-label="Main navigation">
+          <NavLink to="/" end>Timesheet</NavLink>
+          <NavLink to="/board">Board</NavLink>
+        </nav>
         <div className="app-header__actions">
           {onSettings ? (
             <Link
